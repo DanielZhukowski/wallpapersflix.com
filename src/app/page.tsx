@@ -1,66 +1,54 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import WallpaperBlock from '@/components/WallpaperBlock';
+import { wallpapers, categories, subcategories } from '@/lib/data';
+
+export const metadata = {
+  title: 'WallpapersFlix - Premium 4K Wallpapers & HD Backgrounds',
+  description: 'Download high-quality 4K wallpapers and HD backgrounds for desktop and mobile. Browse thousands of free wallpapers across multiple categories.',
+  alternates: {
+    canonical: 'https://wallpapersflix.com',
+  },
+};
+
 
 export default function Home() {
+  // Filter categories that have wallpapers
+  const featuredCategories = categories.filter(cat => wallpapers[cat.name]);
+  const featuredSubcategories = subcategories.filter(sub => wallpapers[sub.name]);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      <section style={{ marginBottom: '4rem', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem' }}>
+          Welcome to <span style={{ color: 'var(--primary)' }}>WallpapersFlix</span>
+        </h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+          The best source for high-quality 4K wallpapers.
+          Find amazing backgrounds for your devices.
+        </p>
+      </section>
+
+      {/* Main Categories Blocks */}
+      {featuredCategories.map((cat) => (
+        <WallpaperBlock
+          key={cat.slug}
+          title={`${cat.name} Wallpapers`}
+          wallpapers={wallpapers[cat.name].slice(0, 4)} // Show top 4
+          viewAllLink={`/${cat.slug}`}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      ))}
+
+      {/* Subcategories Block */}
+      <div style={{ marginTop: '4rem' }}>
+        <h2 className="section-title">Trending Subcategories</h2>
+        {featuredSubcategories.map((sub) => (
+          <WallpaperBlock
+            key={sub.slug}
+            title={sub.name}
+            wallpapers={wallpapers[sub.name].slice(0, 4)}
+            viewAllLink={`/${sub.slug}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
