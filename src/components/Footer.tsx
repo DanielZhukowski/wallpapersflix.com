@@ -29,6 +29,11 @@ export default function Footer() {
                         <Link href="/anime-wallpapers">Anime Wallpapers</Link>
                         <Link href="/gaming-wallpapers">Gaming Wallpapers</Link>
                     </div>
+
+                    <div className={styles.links}>
+                        <h4>Tools</h4>
+                        <a href="https://aienhance.io" target="_blank" rel="noopener">AIEnhance.io</a>
+                    </div>
                 </div>
 
                 <div className={styles.copyright}>
